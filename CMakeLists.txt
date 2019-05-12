@@ -8,7 +8,14 @@ endif(POLICY CMP0042)
 
 find_package (Threads REQUIRED)
 
-set(EXTRA_FLAGS "-Wall -Wsign-compare -g -march=native ${CMAKE_THREAD_LIBS_INIT}")
+if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "^armv7*")
+  # for Raspberry Pi 3
+  set(arch_settings "-mcpu=cortex-a7 -mfloat-abi=hard")
+else()
+  set(arch_settings "-march=native")
+endif()
+set(EXTRA_FLAGS "-Wall -Wsign-compare -g ${arch_settings} ${CMAKE_THREAD_LIBS_INIT}")
+
 set(EXTRA_C_FLAGS "${EXTRA_FLAGS} -std=gnu99")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_FLAGS}")
