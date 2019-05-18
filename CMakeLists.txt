@@ -10,7 +10,7 @@ find_package (Threads REQUIRED)
 
 if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "^armv7*")
   # for Raspberry Pi 3
-  set(arch_settings "-mcpu=cortex-a7 -mfloat-abi=hard")
+  set(arch_settings "-march=armv7-a")
 else()
   set(arch_settings "-march=native")
 endif()
@@ -32,7 +32,7 @@ add_subdirectory(core)
 include_directories(core core/common core/contrib)
 
 include(FindPkgConfig)
-pkg_search_module(OPENCV opencv>=2.3 opencv-2.3.1 opencv-3.0.0)
+pkg_search_module(OPENCV opencv>=4)
 
 if(OPENCV_FOUND)
   include_directories(${OPENCV_INCLUDE_DIRS})
